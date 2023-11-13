@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>VR Car Drive Simulation</title>
+
+  <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+
+  <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/gh/n5ro/aframe-physics-system@v4.0.1/dist/aframe-physics-system.min.js"></script>
+  <script src="https://unpkg.com/aframe-environment-component@1.1.0/dist/aframe-environment-component.min.js"></script>
+  <script src="https://recast-api.donmccurdy.com/aframe-inspector-plugin-recast.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/gh/donmccurdy/aframe-extras@v6.1.1/dist/aframe-extras.min.js"></script>
+
+  <script src="./drive.js"></script>
+  <script src="./game.js"></script>
+
+</head>
+
+<body>
+  <a-scene id="scene" background="color:lightblue" inspector-plugin-recast>
+
+    <!--Assets-->
+    <a-assets>
+      <a-asset-item id="city" src="./assets/low_poly_city/scene.gltf"></a-asset-item>
+      <a-asset-item id="steering" src="./assets/steering_wheel/scene.gltf"></a-asset-item>
+      <a-asset-item id="collider" src="./assets/navmesh.gltf"></a-asset-item>
+   
+    </a-assets>
+
+
+    <!--Sounds-->
+
+    <!--Light-->
+
+
+    <!--City Scene Environment-->
+    <a-entity id="city-set" gltf-model="#city" scale="1 1 1" position="10 -2.6 -150" rotation="0 90 0"></a-entity>
+
+    <!--City Boundary-->
+    <a-box id="b1" material="height: 400; metalness: 0.34" color="white" geometry="depth: 400; height: 50; width: 5"
+      position="-76.79446 -8.30764 -164.16795"></a-box>
+
+      <a-box id="b2" material="height: 400; metalness: 0.34" color="white" geometry="depth: 400; height: 50; width: 5"
+      position="74.384 -8.30764 -30.16795"></a-box>
+   
+   
+   
+      <!--Ground-->
+
+    <!-- Navigation Mesh -->
+    <a-entity id="nav" gltf-model="#collider" position=" 0 10 0" visible="false" nav-mesh></a-entity>
+
+
+    <!--Camera and Cursor-->
+    <a-entity id="camera-rig" movement-controls="speed: 0.5; constrainToNavMesh: true" position="0 1 5" rotation="0 0 0"
+      drive game="play">
+
+      <a-entity id="camera" camera position="0 1.6 0" rotation="0 0 0" look-controls="pointerLockEnabled: false">
+
+        <a-entity id="control-wheel" gltf-model="#steering" scale="0.001 0.001 0.001" position="0.20 -0.12 -0.16"
+          rotation="0 0 0"></a-entity>
+
+          <a-box id="control-break" src="./assets/break.png" color="gray" position="-0.42593 -0.26091 -0.37136"
+          rotation="0 0 0" scale="0.05 0.05 0.001">
+        </a-box>
+
+        <a-box id="control-acce" src="./assets/acc.png" color="gray" position="-0.289 -0.23391 -0.37136"
+          rotation="0 0 0" scale="0.05 0.1 0.001">
+        </a-box>
+
+        <a-entity id="timer" position="4  4.5 -7.16344" text="font: kelsonsans; width:10; height: 5;value:00:00">
+        </a-entity>
+
+        <a-entity id="over" 
+        position="4  -1 -7.16344" 
+        text="font: kelsonsans; width:10; height: 5;value:Try Again" visible ="false" >
+        </a-entity>
+        
+
+        <a-entity id="speed" position="4 -5 -7.16344" text="font: kelsonsans; width:10; height: 5;value: 10">
+          <a-entity id="unit" position="1 0 0" text="font: kelsonsans; width:10; height: 5; value: km/h"></a-entity>
+        </a-entity>
+        
+       
+      </a-entity>>
+    </a-entity>
+  </a-scene>
+</body>
+
+</html>
